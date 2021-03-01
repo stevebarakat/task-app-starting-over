@@ -12,13 +12,11 @@ export default function tasksReducer(state, action) {
         text: action.payload,
         complete: false
       };
-      const addedTasks = [...state, newTask];
+      const addedTasks = [...state.tasks, newTask];
       docRef.set({ tasks: addedTasks });
-      return addedTasks;
-    case "SET_CURRENT_TASK":
       return {
         ...state,
-        currentTask: action.payload
+        tasks: addedTasks
       };
     case "TOGGLE_TASK":
       const toggledTasks = state.tasks.map((task) =>
@@ -31,11 +29,18 @@ export default function tasksReducer(state, action) {
         ...state,
         tasks: toggledTasks
       };
+    case "SET_CURRENT_TASK":
+      console.log(state);
+      return {
+        ...state,
+        currentTask: action.payload
+      };
     case "UPDATE_TASK":
       const tempTasks = state.tasks;
       const id = state.currentTask.id;
       const taskIndex = findIndex(state.tasks, { id });
       tempTasks[taskIndex].text = action.payload;
+      console.log(tempTasks[taskIndex].text);
       docRef.set({ tasks: tempTasks });
       return {
         ...state,
@@ -43,9 +48,16 @@ export default function tasksReducer(state, action) {
         tasks: tempTasks
       };
     case "UPDATE_TASKS":
-      docRef.set({ tasks: action.payload })
-      return action.payload;
-    case "REMOVE_TASK":
+      docRef.set({ tasks: action.payload });
+      return {
+        ...state,
+        tasks: action.payload
+      };
+    case "UPDATE_ORDER": {
+      docRef.set({ tasks: action.payload });
+      return state;
+    }
+    case "DELETE_TASK":
       const filteredTasks = state.tasks.filter(
         (task) => task.id !== action.payload.id
       );

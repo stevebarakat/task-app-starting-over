@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import { firestore } from './firebase';
 import { TasksContext } from './context';
+import {usePositionReorder} from './usePositionReorder';
+import TaskItem from './TaskItem';
+
 const docRef = firestore.collection('tasklist').doc('tasks');
 
 const TaskList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { state, dispatch } = useContext(TasksContext);
+  const [order, updatePosition, updateOrder] = usePositionReorder(state.tasks, dispatch);
 
   useEffect(() => {
     return docRef.onSnapshot(snapshot => {
@@ -14,11 +18,17 @@ const TaskList = () => {
       setIsLoading(false);
     });
   }, [dispatch]);
-  console.log(state);
   return isLoading ? "...loading" :
-    state.map(task => {
-      return <li key={task.id}>{task.text}</li>;
-    });
+    <ul>
+      {order.map((task, i) => <TaskItem
+        key={task.text}
+        i={i}
+        task={task}
+        order={order}
+        updatePosition={updatePosition}
+        updateOrder={updateOrder}
+      />)}
+    </ul>;
 };
 
 export default TaskList;

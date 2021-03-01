@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { firestore } from './firebase';
-import { v4 as uuidv4 } from 'uuid';
 import { TasksContext } from './context';
 
-const docRef = firestore.collection('tasklist').doc('tasks');
 
 const TaskForm = () => {
-  const { state, dispatch } = useContext(TasksContext);
+  const { dispatch } = useContext(TasksContext);
   const [value, setValue] = useState('');
 
   function handleChange(e) {
