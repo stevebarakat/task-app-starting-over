@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { TasksContext } from './context';
+import { TasksContext } from '../context';
 
 
 const TaskForm = () => {
@@ -17,8 +17,13 @@ const TaskForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={value} type="text" />
+    <form style={{display: "flex"}} onSubmit={handleSubmit}>
+      <input 
+        onChange={handleChange} 
+        value={value} 
+        type="text" 
+        style={{width: "100%", padding: "0.25rem"}}  
+      />
       <button type="submit">+</button>
     </form>
   );

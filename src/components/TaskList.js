@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { firestore } from './firebase';
-import { TasksContext } from './context';
-import {usePositionReorder} from './usePositionReorder';
+import { firestore } from '../firebase';
+import { TasksContext } from '../context';
+import {usePositionReorder} from '../hooks/usePositionReorder';
 import TaskItem from './TaskItem';
 
 const docRef = firestore.collection('tasklist').doc('tasks');
