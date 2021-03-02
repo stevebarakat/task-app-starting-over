@@ -3,6 +3,7 @@ import { firestore } from '../firebase';
 import { TasksContext } from '../context';
 import {usePositionReorder} from '../hooks/usePositionReorder';
 import TaskItem from './TaskItem';
+// import TaskItem from './SwipeItem';
 
 const docRef = firestore.collection('tasklist').doc('tasks');
 
@@ -21,7 +22,7 @@ const TaskList = () => {
   return isLoading ? "...loading" :
     <ul>
       {order.map((task, i) => <TaskItem
-        key={task.text}
+        key={task.id}
         i={i}
         task={task}
         order={order}

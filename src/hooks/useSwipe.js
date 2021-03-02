@@ -3,12 +3,11 @@ import { TasksContext } from '../context';
 
 const DELETE_BTN_WIDTH = 70;
 
-const useSwipe = (info, taskId, index, order) => {
+export const useSwipe = (info, taskId, index, order) => {
   const { state, dispatch } = useContext(TasksContext);
 
-  dispatch({ type: "UPDATE_ORDER", payload: order });
-  const dragDistance = info.offset.x;
-  const velocity = info.velocity.x;
+  const dragDistance = info?.offset.x;
+  const velocity = info?.velocity.x;
   const taskSwiped = state.tasks.filter((task) => task.id === taskId)[0];
 
   if (
@@ -43,5 +42,3 @@ const useSwipe = (info, taskId, index, order) => {
     dispatch({ type: "UPDATE_TASKS", payload: newTasksList });
   }
 };
-
-export default useSwipe;
